@@ -44,15 +44,16 @@ setoutputsizes(size)	设置列缓冲区大小，对大数据列尤其有用
 # sql语句
 sql = 'show databases'
 # 执行sql语句
-cursor.execute(sql)
+res = cursor.execute(sql)
+print(res)
 # 批量执行sql语句
-cursor.executemany(sql)
+# cursor.executemany(sql)
 # 获取一条数据
-one = cursor.fetchone()
+# one = cursor.fetchone()
 # 获取指定条数的数据，不写默认为1
-many = cursor.fetchmany(3)
+# many = cursor.fetchmany(3)
 # 获取全部数据
-all = cursor.fetchall()
+# all = cursor.fetchall()
 
 # 关闭游标
 cursor.close()

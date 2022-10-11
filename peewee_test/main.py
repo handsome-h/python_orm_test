@@ -2,12 +2,15 @@ import peewee
 
 from config import MYSQL_CONFIG
 
+# =========================================== 数据库链接 ==================================================
+
 # 声明数据库
 db = peewee.MySQLDatabase(**MYSQL_CONFIG)
 # 连接数据库
 db.connect()
 
-# 实体类
+
+# ========================================== 实体类声明 =======================================================
 class Person(peewee.Model):
     # 常用字段映射
     # IntegerField - int
@@ -57,18 +60,53 @@ class Person(BaseModel):
     name = peewee.CharField()
 """
 
-
-print(db.is_closed())
+# ================================================ 创建表 =======================================================
 
 # 创建多表, 如果数据表已经存在，执行create_table的时候，将会抛出异常。
-db.create_tables([Person])
+# db.create_tables([Person])
 # 创建单表
 # Person.create_table()
 
-# print(db.database)
 
+# ================================================ 增 ===========================================================
+# 单条插入
+# p = Person(name='master')
+# p.save()
+
+# Person.insert(name='test').execute()
+
+# 批量插入
+# Person.insert_many([('111'), ('222')]).execute()
+
+# ================================================ 删 ===============================================================
+# Person.delete().where(Person.name=='1').execute()
+
+# ============================================== 改 ==========================================================
+# Person.update({Person.passwd: 123}).where(Person.name == 'master').execute()
+
+
+# ================================================= 查 ===================================================
+# 查询单条所有字段
+# res = Person.get(Person.name == 'master')
+# print(res.name)
+
+# 查询单条指定字段
+# res = Person.select(Person.name).where(Person.name == 'master').get()
+# print(res.name)
+
+# 查询多条数据
+# res = Person.select(Person.name).where(Person.is_admin == True)
+# for item in res:
+#     print(item.name)
+
+# ============================================ 原生SQL =====================================
+res = Person.raw('select * from persons').execute()
+print(res)
+
+
+# ================================================ 数据库关闭 ============================================================
 # 判断数据库是否关闭
-print(db.is_closed())
+# print(db.is_closed())
 
 # 关闭数据库
 db.close()
