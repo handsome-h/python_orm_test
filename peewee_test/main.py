@@ -90,7 +90,7 @@ class Person(BaseModel):
 # res = Person.get(Person.name == 'master')
 # print(res.name)
 
-# 查询单条指定字段
+# 查询单条指定字段, 只查一条，没有则报错；.get_or_none() # 没有不报错，只查询一条
 # res = Person.select(Person.name).where(Person.name == 'master').get()
 # print(res.name)
 
